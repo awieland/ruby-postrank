@@ -47,7 +47,8 @@ module PostRank
     end
     
     def feed
-      @feed = Feed.find(@feed) unless @feed.is_a?(PostRank::Feed)
+      @feed = Feed.find(@feed) unless @feed.is_a?(Feed)
+      @feed
     end
     
     def save
@@ -75,20 +76,20 @@ module PostRank
     end
 
     def feed_hash
-      return @feed.id if @feed.is_a?(PostRank::Feed)
+      return @feed.id if @feed.is_a?(Feed)
       @feed
     end
     
     private
     
     def sub_data
-      pr = ''
+      pr = 1.0
       if @postrank
         pr = case (@postrank)
-          when PostRank::Level::ALL then 1.0
-          when PostRank::Level::GOOD then 2.7
-          when PostRank::Level::GREAT then 5.4
-          when PostRank::Level::BEST then 7.6
+          when Level::ALL then 1.0
+          when Level::GOOD then 2.7
+          when Level::GREAT then 5.4
+          when Level::BEST then 7.6
           else @postrank
         end
       end
