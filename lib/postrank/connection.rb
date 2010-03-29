@@ -16,11 +16,11 @@ module PostRank
       @request_token.authorize_url
     end
     
-    def authorize      
+    def authorize(request_options = {})      
       unless have_credentials?
         return false if @request_token.nil?
         
-        @access_token = @request_token.get_access_token
+        @access_token = @request_token.get_access_token(request_options)
         @request_token = nil
         
         @user_secret = @access_token.secret
