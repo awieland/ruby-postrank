@@ -29,7 +29,7 @@ module PostRank
       def json_create(o)
         new(:id => o['id'], :feed => o['feed_hash'], :updated => o['updated_at'],
             :created => o['created_at'], :postrank => o['postrank_filter'],
-            :filter => o['keyword_filter'], :tags => o['tagged'])
+            :filter => o['keyword_filter'], :tags => o['tag_list'])
       end
     end
     
