@@ -7,7 +7,7 @@ module PostRank
       
       def find(id=:all)
         id = id.to_sym
-        request_path = id == (:all || id == :first) ? "#{@@base_path}.js" : "#{@@base_path}/#{id}.js"
+        request_path = (id == :all || id == :first) ? "#{@@base_path}.js" : "#{@@base_path}/#{id}.js"
         subs = subscriptions_from(Connection.instance.get(request_path))
         id == :all ? subs : subs.first
       end
