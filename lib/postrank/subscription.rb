@@ -7,23 +7,14 @@ module PostRank
       
       def find(id=:all)
         id = id.to_sym
-        if id == :all || id == :first
-          subs = []
-          JSON.parse(Connection.instance.get("#{@@base_path}.js")).each do |doc|
-            subs << Subscription.json_create(doc['subscription'])
-          end
-          
-          id == :first ? subs.first : subs
-        else
-          Subscription.json_create(JSON.parse(
-                            Connection.instance.get("#{@@base_path}/#{id}.js"))['subscription'])
-        end
+        request_path = id == (:all || id == :first) ? "#{@@base_path}.js" : "#{@@base_path}/#{id}.js"
+        subs = subscriptions_from(Connection.instance.get(request_path))
+        id == :all ? subs : subs.first
       end
       alias find_by_id find
     
       def find_by_feed(feed)
-        Subscription.json_create(JSON.parse(
-                          Connection.instance.get("#{@@base_path}/feed/#{feed.id}.js"))['subscription'])
+        subscriptions_from(Connection.instance.get("#{@@base_path}/feed/#{feed.id}.js")).first
       end
       
       def json_create(o)
@@ -31,6 +22,14 @@ module PostRank
             :created => o['created_at'], :postrank => o['postrank_filter'],
             :filter => o['keyword_filter'], :tags => o['tag_list'])
       end
+      
+      private
+      
+      def subscriptions_from(response)
+        docs = JSON.parse(response)
+        docs = [docs] if docs.respond_to?(:keys)
+        docs.map { |doc| Subscription.json_create(doc['subscription']) }
+      end      
     end
     
     def initialize(opts={})
