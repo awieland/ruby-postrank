@@ -1,12 +1,13 @@
 require 'oauth/consumer'
-require 'singleton'
 
 module PostRank
   class Connection
-    include Singleton
-    
     attr_accessor :appkey, :app_secret, :app_token, :user_secret, :user_token
-    
+
+    def self.instance
+      @instance ||= new
+    end
+
     def initialize
       @access_token = nil
     end
