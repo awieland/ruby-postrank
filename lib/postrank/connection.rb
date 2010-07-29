@@ -1,4 +1,4 @@
-require 'oauth/consumer'
+require 'oauth'
 
 module PostRank
   class Connection

@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{postrank}
-  s.version = "0.9.2"
+  s.version = "0.9.3"
   s.authors = ["dan sinclair"]
   s.email = %q{dan@aiderss.com}
   s.homepage = %q{http://http://github.com/dj2/ruby-postrank/wikis/}
